@@ -191,7 +191,7 @@
     <h1>Shape the foundations</h1>
     <p class="lede">Before contributions open, the founding community is settling how the 2028 gathering gets made: its shape, how funding works, who decides and by when, and what matters most in a site. Your answers shape the proposal we bring to the next community call.</p>
     <div class="facts">
-      <span class="fact">Closes <b id="closesLabel">Fri 6 Nov</b></span>
+      <span class="fact">Closes <b id="closesLabel">Thu, Oct 29, 12 PM CT</b></span>
       <span class="fact"><b>~6</b> minutes</span>
       <span class="fact">Results after you vote</span>
     </div>
@@ -213,7 +213,7 @@ var CONFIG = {
   // australasiaeclipse.com, which uses the same Supabase project. Paste it here to pin it.
   supabaseKey: '',
   keySource: 'https://australasiaeclipse.com/',
-  closesAt: '2026-11-06T23:59:00-06:00'
+  closesAt: '2026-10-29T12:00:00-05:00'  // noon Central (CDT)
 };
 
 /* ---------- Ballot ---------- */
@@ -310,7 +310,7 @@ function el(html) { var d = document.createElement('div'); d.innerHTML = html.tr
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
 var closes = new Date(CONFIG.closesAt);
-document.getElementById('closesLabel').textContent = closes.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+document.getElementById('closesLabel').textContent = closes.toLocaleString('en-US', { timeZone: 'America/Chicago', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric' }) + ' CT';
 var isClosed = Date.now() > closes.getTime();
 
 /* ---------- API ---------- */
