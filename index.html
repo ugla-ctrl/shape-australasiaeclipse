@@ -218,12 +218,12 @@ var CONFIG = {
 
 /* ---------- Ballot ---------- */
 var SECTIONS = [
-  { title: 'Event shape', note: 'This changes what "choosing a location" even means, so it comes first.', qs: [
-    { id: 'shape', type: 'one', q: 'What shape should the 2028 gathering take?', opts: [
-      ['central', 'One central gathering', 'Everyone together at a single site in the path.'],
-      ['hub', 'A main gathering plus regional nodes', 'One flagship site, with smaller community-run gatherings elsewhere along the path.'],
-      ['regional', 'Several regional gatherings, no single flagship', 'Equal gatherings across Australia and New Zealand.'],
-      ['unsure', 'Not sure yet', '']
+  { title: 'Event shape', note: 'The feasibility study is likely to surface more than one viable site. This question is about what we do with them, so it comes first: it changes what choosing a location even means.', qs: [
+    { id: 'shape', type: 'one', q: 'If several sites pass the feasibility study, how should we use them?', opts: [
+      ['central', 'Pick one and gather everyone there', 'The strongest site hosts a single gathering for the whole community.'],
+      ['hub', 'A flagship gathering plus regional nodes', 'The strongest site hosts the main gathering; other viable sites host smaller, community-run gatherings.'],
+      ['regional', 'Several equal gatherings', 'Each viable site hosts its own gathering, across Australia and New Zealand, with no single flagship.'],
+      ['unsure', 'Decide once we see the study results', '']
     ]}
   ]},
   { title: 'Funding and input', note: 'Phase 1 crowdfunds a location feasibility study (about $99 each, around $10K total), held in escrow by EdgeOS.', qs: [
