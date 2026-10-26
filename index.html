@@ -84,6 +84,16 @@
   .hero-bg { position: absolute; top: 0; left: 0; right: 0; height: min(100vh, 900px); z-index: 0; pointer-events: none;
     background: linear-gradient(180deg, rgba(6,6,9,.82) 0%, rgba(6,6,9,.78) 45%, rgba(6,6,9,.88) 80%, #060609 100%), url('hero-bg.jpg') center 40% / cover no-repeat; }
   main, footer { position: relative; z-index: 1; }
+  .bgs { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .bgs div { position: absolute; inset: 0; background: center / cover no-repeat; opacity: 0; transition: opacity 1.4s ease; }
+  .bgs div.on { opacity: 1; }
+  .bgs::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,9,.86), rgba(6,6,9,.80) 50%, rgba(6,6,9,.9)); }
+  .bg-place { position: fixed; left: 20px; bottom: 18px; z-index: 2; display: flex; align-items: center; gap: 9px; font-size: 11.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(243,239,230,.8); transition: opacity .6s; pointer-events: none; }
+  .bg-place::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--spinifex); box-shadow: 0 0 10px var(--spinifex); }
+  .bg-place.off { opacity: 0; }
+  .hero-bg { z-index: 1 !important; }
+  main, footer { z-index: 2 !important; }
+
   .lede, .kicker, h1 { text-shadow: 0 1px 14px rgba(0,0,0,.6); }
   .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .fact { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); }
@@ -179,6 +189,7 @@
     .wrap { padding: 0 16px 80px; }
     .intro { padding-top: 44px; }
     .br { display: none; }
+    .bg-place { display: none; }
     .lede { font-size: 16.5px; }
     .q { padding: 18px 16px; }
     .two { grid-template-columns: 1fr; gap: 0; }
@@ -189,6 +200,8 @@
 </head>
 <body>
 
+<div class="bgs" id="bgs" aria-hidden="true"><div data-src="bg-kimberley.jpg" data-place="The Kimberley, WA"></div><div data-src="bg-karlu-karlu.jpg" data-place="Karlu Karlu, NT"></div><div data-src="bg-blue-mountains.jpg" data-place="Blue Mountains, NSW"></div><div data-src="bg-sydney.jpg" data-place="Sydney Harbour, NSW"></div><div data-src="bg-queenstown.jpg" data-place="Queenstown, NZ"></div><div data-src="bg-milford-sound.jpg" data-place="Milford Sound, NZ"></div></div>
+<span class="bg-place off" id="bgPlace" aria-hidden="true"></span>
 <div class="hero-bg" aria-hidden="true"></div>
 <header class="top">
   <a href="https://australasiaeclipse.com/" style="display:contents"><img src="logo-icon.png" alt="" width="30" height="30">
@@ -559,6 +572,30 @@ function loadKey() {
     if (m) { CONFIG.supabaseKey = m[0]; PREVIEW = false; }
   }).catch(function () {});
 }
+
+/* Scroll-linked location backgrounds: one candidate site per stretch of the page */
+(function () {
+  var layers = [].slice.call(document.querySelectorAll('#bgs div'));
+  var place = document.getElementById('bgPlace');
+  var cur = -1, loaded = false;
+  function load() { if (loaded) return; loaded = true; layers.forEach(function (l) { l.style.backgroundImage = "url('" + l.dataset.src + "')"; }); }
+  function update() {
+    var y = window.scrollY, start = Math.min(window.innerHeight * 0.6, 520);
+    if (y < start) { if (cur !== -1) { layers[cur].classList.remove('on'); cur = -1; place.classList.add('off'); } return; }
+    load();
+    var span = Math.max(1, document.documentElement.scrollHeight - window.innerHeight - start);
+    var i = Math.min(layers.length - 1, Math.floor((y - start) / span * layers.length));
+    if (i === cur) return;
+    if (cur >= 0) layers[cur].classList.remove('on');
+    layers[i].classList.add('on'); cur = i;
+    place.classList.add('off');
+    setTimeout(function () { place.textContent = layers[i].dataset.place; place.classList.remove('off'); }, 350);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('load', function () { setTimeout(load, 1500); });
+  update();
+})();
 view.innerHTML = '<section class="panel"><p>Loading...</p></section>';
 loadKey().then(render);
 </script>
