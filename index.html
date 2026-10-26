@@ -52,7 +52,7 @@
     background-attachment: fixed;
   }
   h1, h2, h3, p, li, label { text-wrap: pretty; }
-  h1, h2, .lede { text-wrap: balance; }
+  h1, h2 { text-wrap: balance; }
   a { color: var(--lagoon); }
   button { font: inherit; color: inherit; }
 
@@ -69,7 +69,7 @@
   .top .progress { margin-left: auto; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--ink-quiet); white-space: nowrap; }
   .bar { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--lagoon); transition: width .3s ease; }
 
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 96px; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 96px; }
 
   /* Intro */
   .intro { padding: 64px 0 24px; }
@@ -78,8 +78,13 @@
     margin-top: 16px; font-family: var(--display); font-weight: 500;
     font-size: clamp(31px, 5.4vw, 44px); line-height: 1.12; letter-spacing: -0.005em;
   }
-  .lede-2 { margin-top: 12px !important; font-size: 16px !important; color: var(--ink-quiet) !important; }
-  .lede { margin-top: 20px; font-size: 18px; color: var(--ink-soft); max-width: 620px; }
+  .lede-2 { margin-top: 12px !important; font-size: 16px !important; color: rgba(243,239,230,.72) !important; max-width: 740px !important; }
+  .lede { margin-top: 20px; font-size: 18px; color: var(--ink-soft); max-width: 820px; text-wrap: pretty; }
+  .gated .lede-2 { display: none; }
+  .hero-bg { position: absolute; top: 0; left: 0; right: 0; height: min(100vh, 900px); z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(6,6,9,.82) 0%, rgba(6,6,9,.78) 45%, rgba(6,6,9,.88) 80%, #060609 100%), url('hero-bg.jpg') center 40% / cover no-repeat; }
+  main, footer { position: relative; z-index: 1; }
+  .lede, .kicker, h1 { text-shadow: 0 1px 14px rgba(0,0,0,.6); }
   .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .fact { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); }
   .fact b { color: var(--ink); font-weight: 500; }
@@ -164,7 +169,7 @@
   .wrow .fill { background: rgba(255, 206, 106, 0.22); }
   .demo { margin-top: 18px; padding: 10px 14px; border-radius: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: #17120b; background: var(--spinifex); }
 
-  footer { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-quiet); display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; }
+  footer { max-width: 860px; margin: 0 auto; padding: 28px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-quiet); display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; }
   footer a { color: var(--ink-soft); }
 
   @media (max-width: 560px) {
@@ -184,6 +189,7 @@
 </head>
 <body>
 
+<div class="hero-bg" aria-hidden="true"></div>
 <header class="top">
   <a href="https://australasiaeclipse.com/" style="display:contents"><img src="logo-icon.png" alt="" width="30" height="30">
   <span class="name" style="color:var(--ink)">Australasia Eclipse 2028</span></a>
@@ -196,7 +202,7 @@
     <p class="kicker">Founding community ballot</p>
     <h1>Shape the Foundation of the <br class="br">2028 Eclipse Gathering, Together</h1>
     <p class="lede">Be a part of the founding community who decides location, and how this festival is built.</p>
-    <p class="lede lede-2">Before contributions open, we are settling the foundations together: what shape the gathering takes, how the feasibility study is funded, who makes the final location call and by when, and what matters most in a site. Your answers shape the proposal we bring to the next community call, and you will see where everyone stands as soon as you vote.</p>
+    <p class="lede lede-2">Australasia Eclipse 2028 will be built with its community, not just sold to it. The first step is crowdfunding a location feasibility study: around 100 founding contributors at about $99 each, held in escrow by EdgeOS, to properly vet candidate sites from the Kimberley and the Red Centre to Sydney and New Zealand&rsquo;s South Island for totality, access, safety, environmental impact and land permissions. Before we open it up, we want input from this trusted founding group on how it should work: how funding and voting relate, who makes the final call and by when, and what matters most in a site. You will see where everyone stands as soon as you vote.</p>
     <div class="facts">
       <span class="fact">Closes <b id="closesLabel">Thu, Oct 29, 12 PM CT</b></span>
       <span class="fact"><b>~6</b> minutes</span>
@@ -360,6 +366,7 @@ function render() {
 }
 
 function renderGate() {
+  document.body.classList.add('gated');
   view.innerHTML = '';
   var p = el('<section class="panel"><p style="margin-top:0">Enter the community password from the call or WhatsApp group to open the ballot.</p>' +
     '<label class="field"><span>Password</span><input type="password" id="codeIn" autocomplete="off" autocapitalize="off" spellcheck="false"></label>' +
@@ -373,6 +380,7 @@ function renderGate() {
 }
 
 function renderBallot() {
+  document.body.classList.remove('gated');
   view.innerHTML = '';
   var n = 0;
   SECTIONS.forEach(function (s, si) {
