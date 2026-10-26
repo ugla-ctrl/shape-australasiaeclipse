@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shape the Foundation Together | Australasia Eclipse 2028</title>
+<title>Shape the 2028 Eclipse Gathering, Together | Australasia Eclipse</title>
 <meta name="description" content="A ballot for the founding community of Australasia Eclipse 2028: the event's shape, how funding works, who decides and when, and what matters most in a site.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#060609">
@@ -11,13 +11,13 @@
 <link rel="apple-touch-icon" href="logo-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shape.australasiaeclipse.com/">
-<meta property="og:title" content="Shape the Foundation Together | Australasia Eclipse 2028">
+<meta property="og:title" content="Shape the Foundation of the 2028 Eclipse Gathering, Together">
 <meta property="og:description" content="Founding community ballot: help decide the location and how this festival is built.">
 <meta property="og:image" content="https://shape.australasiaeclipse.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shape the Foundation Together | Australasia Eclipse 2028">
+<meta name="twitter:title" content="Shape the Foundation of the 2028 Eclipse Gathering, Together">
 <meta name="twitter:description" content="Founding community ballot: help decide the location and how this festival is built.">
 <meta name="twitter:image" content="https://shape.australasiaeclipse.com/og-image.jpg">
 <meta property="og:image:alt" content="Shape the Foundation Together: founding community ballot for Australasia Eclipse 2028, over six candidate landscapes from the Kimberley to Milford Sound.">
@@ -76,8 +76,9 @@
   .kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--spinifex); }
   h1 {
     margin-top: 16px; font-family: var(--display); font-weight: 500;
-    font-size: clamp(38px, 7vw, 62px); line-height: 1.08; letter-spacing: -0.005em;
+    font-size: clamp(31px, 5.4vw, 44px); line-height: 1.12; letter-spacing: -0.005em;
   }
+  .lede-2 { margin-top: 12px !important; font-size: 16px !important; color: var(--ink-quiet) !important; }
   .lede { margin-top: 20px; font-size: 18px; color: var(--ink-soft); max-width: 620px; }
   .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .fact { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); }
@@ -172,6 +173,7 @@
     .pl { display: none; }
     .wrap { padding: 0 16px 80px; }
     .intro { padding-top: 44px; }
+    .br { display: none; }
     .lede { font-size: 16.5px; }
     .q { padding: 18px 16px; }
     .two { grid-template-columns: 1fr; gap: 0; }
@@ -192,8 +194,9 @@
 <main class="wrap" id="app">
   <section class="intro">
     <p class="kicker">Founding community ballot</p>
-    <h1>Shape the Foundation Together</h1>
+    <h1>Shape the Foundation of the <br class="br">2028 Eclipse Gathering, Together</h1>
     <p class="lede">Be a part of the founding community who decides location, and how this festival is built.</p>
+    <p class="lede lede-2">Before contributions open, we are settling the foundations together: what shape the gathering takes, how the feasibility study is funded, who makes the final location call and by when, and what matters most in a site. Your answers shape the proposal we bring to the next community call, and you will see where everyone stands as soon as you vote.</p>
     <div class="facts">
       <span class="fact">Closes <b id="closesLabel">Thu, Oct 29, 12 PM CT</b></span>
       <span class="fact"><b>~6</b> minutes</span>
@@ -358,7 +361,7 @@ function render() {
 
 function renderGate() {
   view.innerHTML = '';
-  var p = el('<section class="panel"><h2>Founding community only</h2><p>Enter the community password from the call or WhatsApp group to open the ballot.</p>' +
+  var p = el('<section class="panel"><p style="margin-top:0">Enter the community password from the call or WhatsApp group to open the ballot.</p>' +
     '<label class="field"><span>Password</span><input type="password" id="codeIn" autocomplete="off" autocapitalize="off" spellcheck="false"></label>' +
     '<div class="submit-row"><button class="btn" id="codeBtn">Continue</button></div></section>');
   view.appendChild(p);
