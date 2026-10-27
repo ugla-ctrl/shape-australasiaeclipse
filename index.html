@@ -98,6 +98,8 @@
   .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .fact { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); }
   .fact b { color: var(--ink); font-weight: 500; }
+  .site-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 11px 20px; border: 1px solid var(--lagoon); border-radius: 999px; color: var(--lagoon); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; background: rgba(6,6,9,.35); transition: background .15s; }
+  .site-link:hover { background: rgba(255,138,30,.14); }
 
   /* Sections */
   .sec { margin-top: 56px; }
@@ -221,6 +223,7 @@
       <span class="fact"><b>~6</b> minutes</span>
       <span class="fact">Results after you vote</span>
     </div>
+    <a class="site-link" href="https://australasiaeclipse.com/" target="_blank" rel="noopener">New here? Visit the main site <span aria-hidden="true">&#8599;</span></a>
   </section>
   <noscript><p class="panel">This ballot needs JavaScript turned on.</p></noscript>
   <div id="view"></div>
