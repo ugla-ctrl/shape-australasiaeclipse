@@ -179,6 +179,9 @@
   .row .lab b { font-family: var(--mono); font-weight: 500; white-space: nowrap; }
   .row .you { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lagoon); margin-left: 8px; }
   .wrow .fill { background: rgba(255, 206, 106, 0.22); }
+  .report h2 { margin-top: 30px; } .report h2:first-of-type { margin-top: 6px; }
+  .report ul, .report ol { margin: 12px 0 0 20px; } .report li { margin-top: 9px; color: var(--ink-soft); line-height: 1.55; } .report li b { color: var(--ink); font-weight: 600; }
+  .report .tl { list-style: none; margin-left: 0; border-left: 2px solid rgba(255,138,30,.5); padding-left: 16px; } .report .tl li { display: flex; flex-wrap: wrap; gap: 4px 12px; } .report .tl b { color: var(--spinifex); min-width: 150px; }
   .demo { margin-top: 18px; padding: 10px 14px; border-radius: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: #17120b; background: var(--spinifex); }
 
   footer { max-width: 860px; margin: 0 auto; padding: 28px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-quiet); display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; }
@@ -244,6 +247,8 @@ var CONFIG = {
   keySource: 'https://australasiaeclipse.com/',
   closesAt: '2026-10-29T12:00:00-05:00'  // noon Central (CDT)
 };
+
+var REPORT_HTML = "<section class=\"panel report\"><p class=\"kicker\">Ballot closed &middot; 17 voters</p><h2>What we heard</h2><ul><li><b>A core team decides, shaped by the community.</b> 14 of 17 want a small core team with a community advisory panel, and 15 of 17 do not want the vote to pick the site directly. Your choices shape the feasibility study, and the study&rsquo;s findings drive site selection.</li><li><b>Announce the location at Egypt Eclipse on Aug 2, 2027</b> (11 of 17), after visiting the finalists one year out.</li><li><b>Launch contributions soon.</b> 12 of 17 want it before the holidays.</li><li><b>The $99 should come back as ticket credit</b> (12 of 17), kept as credit wherever the event lands (11 of 17).</li><li><b>Access and local community support matter most in a site,</b> slightly ahead of clear skies. Totality length ranked last.</li><li><b>Still open:</b> the funding model (6 pay to vote, 5 pay what you want, 5 free input) and one central gathering (7) versus a flagship plus regional nodes (6).</li></ul><h2>Themes from your notes</h2><ul><li><b>Permission comes first.</b> Government approval and Indigenous support are needed wherever the site is.</li><li><b>Travel realities can outweigh totality.</b> Airport-to-site times, total travel time and cost from major hubs, and how remote sites are reached at all. Remote options may need a hosted transport and lodging package.</li><li><b>Regional capacity, not just site capacity.</b> Lodging, food, supplies, water, sanitation and emergency services in the surrounding towns.</li><li><b>Experience should lead the hard calls,</b> with technical site visits that include production leads.</li><li><b>Make it Australian.</b> Local crews and community backing are critical, and the campaign should reach Australians.</li><li><b>Show people what they are choosing:</b> photos, terrain and travel details for each site, plus a published timeline with named owners.</li><li>Several of you offered to help with healing, wellbeing, ceremony and community engagement. Thank you, we will be in touch.</li></ul><h2>Proposed next steps</h2><p>To confirm together on the next community call.</p><ol><li><b>Governance:</b> the location lead runs the vetting, and the core team makes the final call against a published rubric with a contributor advisory panel that includes Australian and operations voices. The reasoning is published when the site is chosen.</li><li><b>Founding Contributor, $99:</b> full credit toward a 2028 ticket plus founding perks, wherever the event lands. Anyone can still suggest sites and share input for free.</li><li><b>If the target is missed:</b> extend the deadline once by two to three weeks, then run a scaled study on the top three sites. The $10K study budget will be published.</li><li><b>One flagship gathering,</b> with community-run regional nodes decided once the study shows how many sites pass.</li><li><b>Two new criteria:</b> regional capacity, and travel time and cost from major hubs. Permission from government and Traditional Owners stays a pass/fail gate.</li><li><b>Australian-led on the ground:</b> Australian production partners and local voices involved before the shortlist.</li><li><b>Every candidate site shown properly</b> in the campaign: photos, terrain, nearest airport, transfer time and estimated travel cost.</li></ol><h2>Timeline</h2><ul class=\"tl\"><li><b>Week of Nov 9, 2026</b><span>Contributions open</span></li><li><b>Jan 31, 2027</b><span>Funding window closes</span></li><li><b>Feb 2027</b><span>Vetted shortlist of three or four sites</span></li><li><b>Jul 22, 2027</b><span>Finalist site visits, one year out</span></li><li><b>Aug 2, 2027</b><span>Location announced at Egypt Eclipse</span></li></ul><p>Full vote counts are below.</p></section>";
 
 /* ---------- Ballot ---------- */
 var SECTIONS = [
@@ -520,6 +525,7 @@ function showResults(res, justVoted) {
     (justVoted ? 'Thank you' : 'Where it stands') + '</h2><p>' + (justVoted ? 'Here is where everyone stands. ' : '') + res.total + ' ballots ' + (isClosed ? 'in total.' : 'so far, closing&nbsp;' +
     esc(closes.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })).replace(/ /g, '&nbsp;') + '.') + '</p>' +
     (PREVIEW ? '<div class="demo">Preview mode: sample numbers, not connected to the live ballot.</div>' : '') + '</section>');
+  if (isClosed) view.appendChild(el(REPORT_HTML));
   view.appendChild(head);
   var mine = res.mine || {};
 
@@ -600,6 +606,7 @@ function loadKey() {
   update();
 })();
 view.innerHTML = '<section class="panel"><p>Loading...</p></section>';
+if (isClosed) { var l2 = document.querySelector('.lede-2'); if (l2) l2.textContent = 'Voting has closed. Thank you to everyone who took part. Here is what we heard, what we propose next, and the full results.'; var cl = document.getElementById('closesLabel'); if (cl && cl.parentNode) cl.parentNode.firstChild.textContent = 'Closed '; [].slice.call(document.querySelectorAll('.fact')).slice(1).forEach(function (f) { f.remove(); }); }
 loadKey().then(render);
 </script>
 </body>
